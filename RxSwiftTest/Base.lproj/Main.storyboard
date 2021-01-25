@@ -33,7 +33,7 @@
                                             <constraint firstAttribute="height" constant="40" id="EgG-wn-TQH"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RBR-ea-BlL">
                                         <rect key="frame" x="169" y="168" width="50" height="40"/>
@@ -42,9 +42,6 @@
                                             <constraint firstAttribute="height" constant="40" id="CdB-lT-ajF"/>
                                         </constraints>
                                         <state key="normal" title="Sign in"/>
-                                        <connections>
-                                            <action selector="signBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iqa-kJ-fWr"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>

@@ -17,10 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var loginTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var signBtn: UIButton!
-    @IBAction func signBtnTapped(_ sender: UIButton) {
-        guard let login = loginTF.text else {return}
-        print("Hello, \(login)")
-    }
+  
     
     
     override func viewDidLoad() {
@@ -46,5 +43,15 @@ class ViewController: UIViewController {
             .map {$0 ? 1 : 0.1}
             .bind(to: signBtn.rx.alpha)
             .disposed(by: disposeBag)
+        
+        signBtn.rx
+            .controlEvent(.touchUpInside)
+            .subscribe(
+                onNext:{ [self] in
+                    guard let login = loginTF.text else {return}
+                    print("Hello, \(login)")
+                }
+            ).disposed(by: disposeBag)
+        
     }
 }
