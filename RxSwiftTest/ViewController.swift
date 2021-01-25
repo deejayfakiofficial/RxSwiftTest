@@ -11,19 +11,40 @@ import RxCocoa
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var btn: UIButton!
-    @IBOutlet weak var lbl: UILabel!
+    private let loginViewModel = LoginViewModel()
+    private let disposeBag = DisposeBag()
     
-    let disposeBag = DisposeBag()
+    @IBOutlet weak var loginTF: UITextField!
+    @IBOutlet weak var passwordTF: UITextField!
+    @IBOutlet weak var signBtn: UIButton!
+    @IBAction func signBtnTapped(_ sender: UIButton) {
+        guard let login = loginTF.text else {return}
+        print("Hello, \(login)")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.rx
-            .controlEvent(.editingChanged)
-            .withLatestFrom(textField.rx.text.orEmpty)
-            .subscribe(onNext: {text in
-                self.lbl.text = text
-            }).disposed(by: disposeBag)
+        
+        loginTF.becomeFirstResponder()
+        
+        loginTF.rx.text
+            .map {$0 ?? ""}
+            .bind(to: loginViewModel.usernameTextPublishSubject)
+            .disposed(by: disposeBag)
+        
+        passwordTF.rx.text
+            .map {$0 ?? ""}
+            .bind(to: loginViewModel.passwordTextPublishSubject)
+            .disposed(by: disposeBag)
+        
+        loginViewModel.isValid()
+            .bind(to: signBtn.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        loginViewModel.isValid()
+            .map {$0 ? 1 : 0.1}
+            .bind(to: signBtn.rx.alpha)
+            .disposed(by: disposeBag)
     }
 }
